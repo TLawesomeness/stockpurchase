@@ -1,0 +1,34 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Stock Purchase App
+    link(rel='stylesheet', href='/style.css')
+  body
+    h1 Buy Stocks
+    
+    .container
+      .row
+        #left
+          .col-md-6.leftcol
+            h3 Buy stocks
+            input#symbolInput(type='text' placeholder='input symbol')
+            input#numShares(type='number' placeholder='share amount')
+            button#buyStock Buy
+            #showData    
+        
+        #right  
+          .col-md-6.rightcol
+            h3 Cash
+            input#cashInput(type='number' placeholder='input amount')
+            button#addCash(type='button') Add Cash
+            .showSum.text-center
+              span#sum Balance:
+            #Position
+              span#totalPos Total Position:
+                
+            #Assets
+              span#totalAsset Total Assets:
+                      
+    script(src='/vendor/jquery/dist/jquery.js')
+    script(src='/main.js')
