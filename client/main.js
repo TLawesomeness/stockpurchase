@@ -27,7 +27,7 @@ function getStock() {
         $divData.addClass('dataDesign');
         var $position = parseInt(shares) * parseInt(data.LastPrice);
         var $display = $divData.html('Name: ' + data.Name + '<br />' + 'Symbol: ' + data.Symbol + '<br />' + 'Price: ' + '$' + data.LastPrice + ' per share' + '<br />' + ' Position: ' + '$' + $position + '<br />' + shares + ' Shares' + '<br />');
-        $('#showData').append($display);
+        $('#stockData').append($display);
         $display.append($update, $sell);
 
         console.log('current position: ' + $position);

@@ -15,19 +15,19 @@ html(lang='en')
             input#symbolInput(type='text' placeholder='input symbol')
             input#numShares(type='number' placeholder='share amount')
             button#buyStock Buy
-            #showData    
+            #stockData    
         
         #right  
           .col-md-6.rightcol
-            h3 Cash
+            h3 Balance amount
             input#cashInput(type='number' placeholder='input amount')
             button#addCash(type='button') Add Cash
-            .showSum.text-center
+            #cashData.text-center
               span#sum Balance:
-            #Position
+              #Position
               span#totalPos Total Position:
                 
-            #Assets
+              #Assets
               span#totalAsset Total Assets:
                       
     script(src='/vendor/jquery/dist/jquery.js')
