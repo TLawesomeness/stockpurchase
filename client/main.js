@@ -11,14 +11,23 @@ function getStock() {
   var $sell;
   var currentBal = 0;
 
+  $('#addCash').click(function() {
+    var input = $('#cashInput').val();
+    var total = parseFloat(input);
+    currentBal += total;
+    $('#sum').html('Balance: ' + currentBal);
+    totalAsset = totalPos + currentBal;
+    $('#totalAsset').html('Total Assets: ' + totalAsset);
+  });
+
   $('#buyStock').click(function() {
 
     var symbol = $('#symbolInput').val();
     var shares = $('#numShares').val() * 1;
+    var url = 'http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=' + symbol + '&callback=?';
     $update = $('<input type="button" id="update" value ="Update" />');
     $sell = $('<input type="button" id="sell" value ="Sell" />');
-    var url = 'http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=' + symbol + '&callback=?';
-    // var remainBal;
+
     $.getJSON(url, function(data) {
       var $position = parseInt(shares) * parseInt(data.LastPrice);
 
@@ -30,9 +39,8 @@ function getStock() {
         alert('Too expensive!');
       } else {
 
-        var $divData = $('<div id="dataId">');
+        var $divData = $('<div>');
         $divData.addClass('dataDesign');
-
         var name = 'Name: ' + data.Name + '<br />';
         var symb = 'Symbol: ' + data.Symbol + '<br />';
         var price = 'Price: ' + '$' + data.LastPrice + ' per share' + '<br />';
@@ -40,13 +48,7 @@ function getStock() {
         var $display = $divData.html(name + symb + price + share);
         $('#stockData').append($display);
         $display.append($update, $sell);
-        console.log('current position: ' + $position);
 
-        //   remainBal = currentBal - $position;
-        // if ($('#stockData')) {
-        //   console.log('after buy: ' + remainBal);
-        //   $('#sum').html('Balance: ' + remainBal);
-        // }
         currentBal = currentBal - $position;
         console.log('current balance after buy: ' + currentBal);
         $('#sum').html('Current Balance: ' + currentBal);
@@ -59,32 +61,23 @@ function getStock() {
         console.log(totalAsset);
         $('#totalAsset').html('Total Assets: ' + totalAsset);
 
-        $update.click(function() {
-          $.getJSON(url, function(data) {
-            price = 'Price: ' + '$' + data.LastPrice + ' per share' + '<br />';
-            $display = $divData.html(name + symb + price + share);
-            $('#stockData').append($display);
-            $display.append($update, $sell);
-            console.log(data.LastPrice);
-          });
-        });
-
         $sell.click(function() {
           $('#sum').html('Balance: ' + (currentBal += $position));
           $('#totalPos').html('Total Position: ' + (totalPos -= $position));
           $divData.remove();
         });
+
+        $update.click(function() {
+          $.getJSON(url, function(data) {
+            var $div = $('<div>');
+            $div.addClass('dataDesign');
+            $div.html('Name: ' + data.Name + '<br />' + 'Price: ' + '$' + data.LastPrice + ' per share' + '<br />');
+            $('#showData').append($div);
+            console.log('updated quote: ' + data.LastPrice);
+
+          });
+        });
       }
     });
   });
-
-  $('#addCash').click(function() {
-    var input = $('#cashInput').val();
-    var total = parseFloat(input);
-    currentBal += total;
-    $('#sum').html('Balance: ' + currentBal);
-    totalAsset = totalPos + currentBal;
-    $('#totalAsset').html('Total Assets: ' + totalAsset);
-  });
-
 }
