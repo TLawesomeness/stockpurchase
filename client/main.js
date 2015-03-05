@@ -14,10 +14,14 @@ function getStock() {
   $('#addCash').click(function() {
     var input = $('#cashInput').val();
     var total = parseFloat(input);
-    currentBal += total;
-    $('#sum').html('Balance: ' + currentBal);
-    totalAsset = totalPos + currentBal;
-    $('#totalAsset').html('Total Assets: ' + totalAsset);
+    if (!input) {
+      alert('Please put some money in...');
+    } else {
+      currentBal += total;
+      $('#sum').html('Balance: ' + currentBal);
+      totalAsset = totalPos + currentBal;
+      $('#totalAsset').html('Total Assets: ' + totalAsset);
+    }
   });
 
   $('#buyStock').click(function() {
